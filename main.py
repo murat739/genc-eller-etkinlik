@@ -7,6 +7,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Custom CSS Stilleri
 st.markdown("""
 <style>
     .main-title { font-size: 2.2rem; color: #1E3A8A; text-align: center; font-weight: 800; }
@@ -15,6 +16,19 @@ st.markdown("""
     .verse-box { background-color: #ECFDF5; border-left: 4px solid #059669; padding: 10px; border-radius: 5px; margin: 8px 0; }
     .hadith-box { background-color: #FEF3C7; border-left: 4px solid #D97706; padding: 10px; border-radius: 5px; margin: 8px 0; }
     .example-box { background-color: #EFF6FF; border-left: 4px solid #3B82F6; padding: 10px; border-radius: 5px; margin: 8px 0; }
+    
+    /* Hukuksal Bildirim Kutusu Stili */
+    .legal-notice {
+        background-color: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-left: 4px solid #EF4444;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 0.82rem;
+        color: #475569;
+        margin-top: 15px;
+        line-height: 1.4;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -1529,6 +1543,19 @@ arama = st.sidebar.text_input("Ara:")
 tum_kategoriler = sorted(list(set([d["kategori"] for d in DERSLER_PARCA1])))
 kategori = st.sidebar.selectbox("Kategori:", ["Tümü"] + tum_kategoriler)
 
+# Hukuksal Bildirim ve Kullanım Şartları (Yan Menü)
+st.sidebar.markdown("---")
+st.sidebar.markdown("### ⚖️ Yasal Uyarı & Kullanım Şartları")
+st.sidebar.markdown("""
+<div class='legal-notice'>
+    <b>📌 TELİF VE KULLANIM BİLDİRİMİ</b><br><br>
+    • <b>Amacı:</b> Bu uygulama tamamen <b>mânevi gelişim, eğitim ve tefekkür</b> amacıyla hazırlanmıştır.<br>
+    • <b>Ticari Kullanım Yasağı:</b> Uygulama içeriği hiçbir şekilde ticari amaçla kullanılamaz, satılamaz ve gelir elde etme aracına dönüştürülemez.<br>
+    • <b>Kopyalama Yasağı:</b> Uygulama içerisindeki metin ve kod yapısı izinsiz kopyalanamaz, çoğaltılamaz ve amacı dışında kullanılamaz.<br>
+    • <b>Sorumluluk Reddi:</b> Yazılımcı/Geliştirici, uygulamanın kullanımından doğabilecek doğrudan veya dolaylı hiçbir hukuki, idari veya cezai sorumluluğu kabul etmez. Kullanıcı uygulamaya erişerek bu şartları aynen kabul etmiş sayılır.
+</div>
+""", unsafe_allow_html=True)
+
 filtreli = DERSLER_PARCA1
 if arama:
     filtreli = [d for d in filtreli if arama.lower() in d["baslik"].lower() or arama.lower() in d["genç_ornegi"].lower()]
@@ -1554,4 +1581,9 @@ for ders in filtreli:
                 st.write(f"- {s}")
 
 st.markdown("---")
-st.markdown("<div style='text-align: center; color: gray;'>1 - 100 Arası Tüm Modüller Tamamlandı.</div>", unsafe_allow_html=True)
+# Sayfa Altı (Footer) Hukuki Metni
+st.markdown("""
+<div style='text-align: center; color: #6B7280; font-size: 0.8rem; padding: 10px;'>
+    <b>Yasal Uyarı:</b> Bu yazılım sadece manevi gelişim amacı taşımakta olup, kopyalanması, çoğaltılması ve ticari amaçlarla kullanılması kesinlikle yasaktır. Yazılımcının kullanım ve içerik kaynaklı herhangi bir sorumluluğu bulunmamaktadır.
+</div>
+""", unsafe_allow_html=True)
